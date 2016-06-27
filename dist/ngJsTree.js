@@ -120,7 +120,7 @@
         return {
             restrict: 'A',
             scope: {
-                treeData: '=ngModel',
+                treeData: '=?ngModel',
                 treeEventsObj: '=?treeEventsObj',
                 shouldApply: '&'
             },
@@ -202,11 +202,13 @@
                     config = {};
                     angular.copy(jsTreeSettings, config);
                     var result = JSON.stringify(config);
-                    if (config.core) {
-                        config.core.data = scope.treeData;
-                    }
-                    else {
-                        config.core = { data: scope.treeData };
+                    if (scope.treeData) {
+                        if (config.core) {
+                            config.core.data = scope.treeData;
+                        }
+                        else {
+                            config.core = { data: scope.treeData };
+                        }
                     }
                     if (config.plugins) {
                         config.plugins.push('alltrigger');
